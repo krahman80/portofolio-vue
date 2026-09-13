@@ -1,11 +1,19 @@
-<script setup></script>
+<script setup>
+import NavBar from '@/components/layout/NavBar.vue'
+import Footer from '@/components/layout/Footer.vue'
+import HeroSection from '@/components/hero/HeroSection.vue'
+import WorkSection from '@/components/work/WorkSection.vue'
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
-</template>
+  <div class="bg-surface text-primary flex flex-col min-h-screen font-sans selection:bg-primary selection:text-white">
+    <NavBar />
 
-<style scoped></style>
+    <main class="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-20 sm:space-y-28">
+      <HeroSection />
+      <WorkSection />
+    </main>
+
+    <Footer />
+  </div>
+</template>

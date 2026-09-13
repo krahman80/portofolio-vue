@@ -1,12 +1,13 @@
 # Product Requirements Document
+
 ## Kautsar Rahman Portfolio — Vue 3 + Tailwind CSS SPA
 
-| | |
-|---|---|
-| **Author** | Kautsar Rahman |
-| **Status** | Draft v1.0 |
-| **Source reference** | `index.html` (existing static HTML/Tailwind landing page) |
-| **Target stack** | Vue 3 (Composition API) + Tailwind CSS, static JSON data, no backend/database |
+|                      |                                                                               |
+| -------------------- | ----------------------------------------------------------------------------- |
+| **Author**           | Kautsar Rahman                                                                |
+| **Status**           | Draft v1.0                                                                    |
+| **Source reference** | `index.html` (existing static HTML/Tailwind landing page)                     |
+| **Target stack**     | Vue 3 (Composition API) + Tailwind CSS, static JSON data, no backend/database |
 
 ---
 
@@ -48,52 +49,60 @@ This PRD defines the rebuild of that page as a **Vue 3 + Tailwind CSS single-pag
 
 The existing `index.html` already establishes the design system this rebuild must preserve:
 
-| Token | Value | Notes |
-|---|---|---|
-| `--color-primary` | `#0E100F` | near-black, text/buttons/nav |
-| `--color-secondary` | `#6B6B6B` | body copy |
-| `--color-surface` | `#FFFFFF` | page background |
-| `--color-border-light` | `#D4D4D4` | borders |
-| `--color-pill-bg` | `#F7F7F7` | tag/pill fill |
-| `--color-muted` | `#878787` | tertiary text |
-| Font | Plus Jakarta Sans | ⚠️ see Risk R4 — no Japanese glyph coverage |
-| Shape | `clip-path` angled corners on photo + cards, 0 shadow except soft card shadow | signature visual motif, must be preserved |
-| Decoration | halftone dot-grid clusters, inverted "highlighter" span on headline | preserve as-is |
+| Token                  | Value                                                                         | Notes                                       |
+| ---------------------- | ----------------------------------------------------------------------------- | ------------------------------------------- |
+| `--color-primary`      | `#0E100F`                                                                     | near-black, text/buttons/nav                |
+| `--color-secondary`    | `#6B6B6B`                                                                     | body copy                                   |
+| `--color-surface`      | `#FFFFFF`                                                                     | page background                             |
+| `--color-border-light` | `#D4D4D4`                                                                     | borders                                     |
+| `--color-pill-bg`      | `#F7F7F7`                                                                     | tag/pill fill                               |
+| `--color-muted`        | `#878787`                                                                     | tertiary text                               |
+| Font                   | Plus Jakarta Sans                                                             | ⚠️ see Risk R4 — no Japanese glyph coverage |
+| Shape                  | `clip-path` angled corners on photo + cards, 0 shadow except soft card shadow | signature visual motif, must be preserved   |
+| Decoration             | halftone dot-grid clusters, inverted "highlighter" span on headline           | preserve as-is                              |
 
 Existing sections to carry over 1:1 in behavior: sticky nav with EN/JPN switcher and mobile hamburger menu, hero (portrait + headline + bio + skill pills + CTAs + copy-email action), Work grid (currently 6 static cards), project preview modal, contact modal, footer.
+
+**Token usage convention (confirmed, §11.9).** The six palette tokens above are registered as Tailwind theme tokens, so components reference them through their generated utilities — `text-primary`, `text-secondary`, `text-muted`, `bg-surface`, `bg-pill-bg`, `border-border-light` — instead of repeating raw hex arbitrary values such as `text-[#0E100F]`. Rendering is byte-identical; the intent is a single source of truth for the palette. `#EDEDED` (hairline borders) is intentionally **not** one of the six tokens and stays as an arbitrary value.
 
 ## 6. Functional Requirements
 
 Each requirement has an ID for traceability into the development plan.
 
 ### 6.1 Global / App Shell
+
 - **FR-1.** The app is a single page (no routed sub-pages) with anchor-scroll navigation between Hero and Work, matching current `#hero` / `#work` behavior. Project detail views are modal-only and are not deep-linkable (confirmed, §11.7) — no Vue Router dependency is needed for this build.
 - **FR-2.** Sticky header with logo, nav links, language switcher, and a mobile hamburger dropdown — behavior parity with current `toggleMobileMenu()` logic. The header's "Contact" link and the hero's "Contact me" button no longer open a modal (that modal is removed, §6.7); both instead trigger the existing "copy email to clipboard" action, or link to a plain `mailto:`, pending your call in OQ-6.
 - **FR-3.** All user-facing strings (nav labels, buttons, section headers, form labels, empty/success states) come from a locale JSON file — no hardcoded EN or JA text in components.
 
 ### 6.2 Profile / Hero Section
+
 - **FR-4.** Displays the profile photo, name, role/tagline, bio paragraph, and skill pills, all sourced from `profile.json`.
 - **FR-5.** Retains the existing visual treatment: circular clipped/dot-grid frame, status badge, location tag.
 - **FR-6.** Bio, tagline, and headline text are localized (EN/JA) via the locale files, consistent with FR-3.
 
 ### 6.3 Profile Picture Switcher (new)
+
 - **FR-7.** The visitor can choose between **3 predefined profile photos**. Each photo is defined in `profile.json` (id, file path, alt text) — no upload capability.
 - **FR-8.** The picker UI presents the 3 thumbnails (e.g. a small row of selectable circular swatches near the hero photo). Selecting one immediately updates the large hero portrait. This picker exists **only in the hero section** — it is not duplicated in a settings menu or elsewhere on the page (confirmed, §11.6).
 - **FR-9.** The selected photo choice **persists across page reloads** using `localStorage` (assumption — see §11), defaulting to the first entry in `profile.json` if nothing is stored.
 - **FR-10.** Picker is keyboard-operable (tab + enter/space) and each swatch has an `aria-label`.
 
 ### 6.4 Language Switcher
+
 - **FR-11.** EN / JA toggle in the header, matching current placement and styling.
 - **FR-12.** Switching language updates all visible text instantly, without a page reload, including currently-open modals.
 - **FR-13.** The chosen language **persists across reloads** via `localStorage` (assumption — see §11), defaulting to `en` if unset (or optionally to the browser's `navigator.language`, see Open Question OQ-2).
 
 ### 6.5 Portfolio / Work Section
+
 - **FR-14.** Renders one card per entry in `works.json`, in array order (or by a `sortOrder` field).
 - **FR-15.** Each card shows: a real project screenshot as its cover thumbnail (the first entry in that project's `images[]`), title, tag pills, short description, tech stack, "Preview" action, and a GitHub link — matching current card anatomy but with a real image replacing the current CSS "code mockup."
 - **FR-16.** Clicking anywhere on the card — the thumbnail image, the title, or the "Preview" button — opens the Project Detail Modal (§6.6) for that project.
 - **FR-17.** Card titles/descriptions are localized per-project (`title.en`/`title.ja`, `description.en`/`description.ja` in the JSON schema).
 
 ### 6.6 Project Detail Modal + Image Carousel (new)
+
 - **FR-18.** Opening a project shows a modal with: project category tag, localized title, stats line, localized architecture/description text, tech-stack tags, GitHub link, and a "Launch Live App" link — parity with the current modal.
 - **FR-19.** **New:** the modal's banner area becomes an **image carousel** cycling through the `images[]` array defined for that project in `works.json`. Every project ships with a minimum of **3–4 real screenshots** (confirmed, §11.5) — the previous single-image CSS mockup banner is retired as the standard treatment, not kept as a permanent fallback.
 - **FR-20.** Carousel supports: next/previous controls, clickable dot/thumbnail indicators, keyboard **←/→** navigation while the modal is focused, and (on touch devices) swipe gesture.
@@ -101,10 +110,12 @@ Each requirement has an ID for traceability into the development plan.
 - **FR-22.** Modal is dismissible via the close button, the backdrop click, and the **Esc** key; focus is trapped inside the modal while open and returns to the triggering card on close.
 
 ### 6.7 Contact — deferred to a later phase
+
 - **FR-23 (deferred).** The full contact form (name/email/message fields, submit handling, success state) is **out of scope for this build** and will be scoped in a future PRD once a decision is made on how submissions actually get delivered without a backend.
 - **FR-24.** For v1, the site keeps only the existing lightweight actions that need no backend at all: the "copy email to clipboard" button (header + hero + footer) and, optionally, a plain `mailto:` link. No modal, no form, no submit handling.
 
 ### 6.8 Footer
+
 - **FR-25.** Retains current footer content (identity blurb, location, email, social links) sourced from `profile.json`, localized per FR-3.
 
 ## 7. Data Model (JSON files)
@@ -112,32 +123,58 @@ Each requirement has an ID for traceability into the development plan.
 All content lives under `/src/data/`. No file talks to a database or external API at runtime except the optional contact-form relay (FR-24).
 
 ### 7.1 `profile.json`
+
 ```json
 {
   "name": "Kautsar Rahman",
-  "role": { "en": "Independent Web Developer & Engineer", "ja": "ウェブエンジニア / フロントエンド・フルスタック" },
+  "role": {
+    "en": "Independent Web Developer & Engineer",
+    "ja": "ウェブエンジニア / フロントエンド・フルスタック"
+  },
   "location": { "city": "Sapporo, Hokkaido", "coords": "43°03'N 141°21'E" },
   "bio": { "en": "...", "ja": "..." },
-  "skills": ["React / Next.js", "TypeScript", "Tailwind CSS v4", "Node.js & APIs", "Performance & a11y"],
+  "skills": [
+    "React / Next.js",
+    "TypeScript",
+    "Tailwind CSS v4",
+    "Node.js & APIs",
+    "Performance & a11y"
+  ],
   "email": "kautsar.rahman@gmail.com",
   "social": { "github": "https://github.com/...", "linkedin": "https://..." },
   "avatars": [
-    { "id": "avatar-1", "src": "/assets/profile/avatar-1.jpg", "alt": "Kautsar Rahman portrait, option 1" },
-    { "id": "avatar-2", "src": "/assets/profile/avatar-2.jpg", "alt": "Kautsar Rahman portrait, option 2" },
-    { "id": "avatar-3", "src": "/assets/profile/avatar-3.jpg", "alt": "Kautsar Rahman portrait, option 3" }
+    {
+      "id": "avatar-1",
+      "src": "/assets/profile/avatar-1.jpg",
+      "alt": "Kautsar Rahman portrait, option 1"
+    },
+    {
+      "id": "avatar-2",
+      "src": "/assets/profile/avatar-2.jpg",
+      "alt": "Kautsar Rahman portrait, option 2"
+    },
+    {
+      "id": "avatar-3",
+      "src": "/assets/profile/avatar-3.jpg",
+      "alt": "Kautsar Rahman portrait, option 3"
+    }
   ],
   "defaultAvatarId": "avatar-1"
 }
 ```
 
 ### 7.2 `works.json`
+
 ```json
 [
   {
     "id": "sapporo-snow",
     "category": "WEB APPS",
     "sortOrder": 1,
-    "title": { "en": "Sapporo Snow & Transit Engine", "ja": "札幌スノー＆都市交通エンジン" },
+    "title": {
+      "en": "Sapporo Snow & Transit Engine",
+      "ja": "札幌スノー＆都市交通エンジン"
+    },
     "description": { "en": "...", "ja": "..." },
     "stats": "15-min live radar sync • Sub-second vector map rendering",
     "tags": ["React", "TypeScript", "Tailwind CSS", "Leaflet"],
@@ -147,20 +184,29 @@ All content lives under `/src/data/`. No file talks to a database or external AP
       { "src": "/assets/works/sapporo-snow/1.jpg", "alt": "Radar map view" },
       { "src": "/assets/works/sapporo-snow/2.jpg", "alt": "Advisory panel" },
       { "src": "/assets/works/sapporo-snow/3.jpg", "alt": "Mobile view" },
-      { "src": "/assets/works/sapporo-snow/4.jpg", "alt": "Road-clearing tracker view" }
+      {
+        "src": "/assets/works/sapporo-snow/4.jpg",
+        "alt": "Road-clearing tracker view"
+      }
     ]
   }
 ]
 ```
+
 `images[]` requires a **minimum of 3 entries per project** (target 3–4) — this is the confirmed content requirement, not an optional array (§11.5).
 
 ### 7.3 Locale files — `locales/en.json`, `locales/ja.json`
+
 Flat or nested key/value maps for **UI chrome only** (nav labels, button text, section eyebrows/subtitles, form labels, empty/success states, aria-labels). Project and profile content stays in `works.json` / `profile.json` per-field (`{en, ja}`) rather than in the locale files, since it's tied 1:1 to a data record.
+
 ```json
 {
   "nav": { "about": "About", "work": "Work", "contact": "Contact" },
   "hero": { "cta_contact": "Contact me", "cta_work": "Check my work" },
-  "work": { "eyebrow": "Selected Portfolio", "title": "Featured Works & Systems" },
+  "work": {
+    "eyebrow": "Selected Portfolio",
+    "title": "Featured Works & Systems"
+  },
   "contact": { "name_label": "Your Name", "submit": "Send Message" }
 }
 ```
@@ -201,6 +247,7 @@ src/
 ```
 
 **Library choices to confirm with Kautsar (see §11 Assumptions):**
+
 - i18n: `vue-i18n` (recommended) vs. the lightweight custom `useLocale` composable outlined above. Given only 2 languages and content-heavy strings already modeled as `{en, ja}` objects in JSON, a small custom composable is likely sufficient and avoids an extra dependency — **recommendation: custom composable**, revisit only if the string count grows substantially.
 - State management: plain Composition API composables (above) are sufficient at this scope; **Pinia is not recommended** unless the app grows additional shared state.
 - Build tool: Vite (Vue 3 default).
@@ -237,9 +284,12 @@ The gaps in the original draft have now been resolved as follows:
 5. **Card thumbnails / carousel images:** confirmed — **every project ships with real screenshots, minimum 3–4 images each.** Clicking a project's card (including its thumbnail image) opens a modal overlay ("new window" here is read as an in-page modal/lightbox, consistent with the site's existing modal pattern from §6.6 — not a literal new browser tab; flag if you actually meant a separate browser window/tab and this gets revised). Inside that modal, the visitor slides through all of that project's images via the carousel controls (arrows, dots, keyboard, swipe — FR-20).
 
    Recommendation carried over from the earlier draft: keep a **consistent aspect ratio** (e.g. 16:9) across a single project's `images[]` array so slides don't jump/reflow when navigating.
+
 6. **Avatar switcher placement:** confirmed — visible only near the hero photo (FR-8). Not duplicated in a settings/utility menu or anywhere else in the header/footer.
 7. **Project detail navigation:** confirmed — **modal only, no routing.** No deep-linkable URLs per project (e.g. no `/#/work/sapporo-snow`); Vue Router is not needed for this build (consistent with the "no routed sub-pages" note in §6.1/§8).
 8. **Analytics:** confirmed — **no analytics requirement.** No GA4/Plausible/etc. is added in this build.
+9. **Design token usage:** confirmed — components consume the six palette tokens from §5 through Tailwind's generated semantic utilities (`text-primary`, `text-secondary`, `text-muted`, `bg-surface`, `bg-pill-bg`, `border-border-light`) rather than raw hex arbitrary values. Values are identical, so this is a maintainability decision, not a visual one. `#EDEDED` has no token and remains an arbitrary value.
+10. **Deployment target:** confirmed — the site is deployed at the **root of its own domain**, not a subdomain and not a subdirectory. The default Vite `base: '/'` is therefore correct and no `base` override is needed.
 
 ## 12. Open Questions
 
