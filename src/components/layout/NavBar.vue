@@ -1,14 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 
+import { useLocale } from '@/composables/useLocale'
+
+const { locale, setLocale, t } = useLocale()
+
 /**
- * Sprint 0 — static header chrome.
- *
- * Deferred on purpose (see DEVELOPMENT-PLAN):
- * - Language switcher is presentational only; Sprint 1 wires it to `useLocale`.
- * - "Contact" is a plain `mailto:` placeholder. The contact modal is removed
- *   from v1 entirely (PRD §6.7); FR-2/FE-24 settle the final copy-email
- *   affordance in a later sprint.
+ * Local-only UI state. The language switcher itself is driven by `useLocale`,
+ * so the choice is shared with every other component and persisted (FR-11–FR-13).
  */
 const isMobileMenuOpen = ref(false)
 
@@ -19,11 +18,11 @@ function closeMobileMenu() {
 
 <template>
     <header id="nav-header"
-        class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-sm border-b border-[#EDEDED] transition-all">
+        class="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-sm border-b border-hairline transition-all">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Branding / Logo -->
             <a id="nav-logo" href="#hero" class="flex items-center group cursor-pointer"
-                aria-label="Kautsar Rahman Portfolio">
+                :aria-label="t('nav.brand_aria')">
                 <span
                     class="font-black text-2xl tracking-tighter text-primary select-none transition-transform group-hover:scale-105">
                     KR
@@ -34,39 +33,46 @@ function closeMobileMenu() {
             <nav id="nav-links" class="hidden md:flex items-center gap-8">
                 <a id="nav-link-about" href="#hero"
                     class="text-[13px] font-medium text-secondary hover:text-primary transition-colors cursor-pointer">
-                    About
+                    {{ t('nav.about') }}
                 </a>
                 <a id="nav-link-work" href="#work"
                     class="text-[13px] font-medium text-secondary hover:text-primary transition-colors cursor-pointer">
-                    Work
+                    {{ t('nav.work') }}
                 </a>
                 <a id="nav-link-contact" href="mailto:kautsar.rahman@gmail.com"
                     class="text-[13px] font-medium text-secondary hover:text-primary transition-colors cursor-pointer">
-                    Contact
+                    {{ t('nav.contact') }}
                 </a>
             </nav>
 
-            <!-- Language / Utility Controls (EN / JPN) + Mobile Hamburger -->
+            <!-- Language / utility controls (EN / JPN) + mobile hamburger -->
             <div id="nav-utility-controls" class="flex items-center gap-2 sm:gap-3">
-                <!-- Language Switcher (EN / JPN) — wired in Sprint 1 -->
+                <!-- Language switcher (EN / JPN) -->
                 <div id="lang-switcher"
-                    class="flex items-center bg-pill-bg p-0.5 rounded-full border border-border-light">
+                    class="flex items-center bg-pill-bg p-0.5 rounded-full border border-border-light" role="group"
+                    aria-label="Language">
                     <button id="btn-lang-en" type="button"
-                        class="px-2.5 sm:px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer bg-primary text-white shadow-xs"
-                        aria-label="Switch to English" aria-pressed="true">
+                        class="px-2.5 sm:px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer"
+                        :class="locale === 'en'
+                            ? 'bg-primary text-white shadow-xs'
+                            : 'text-secondary hover:text-primary'
+                            " aria-label="Switch to English" :aria-pressed="locale === 'en'" @click="setLocale('en')">
                         EN
                     </button>
                     <button id="btn-lang-ja" type="button"
-                        class="px-2.5 sm:px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer text-secondary hover:text-primary"
-                        aria-label="日本語に切り替え" aria-pressed="false">
+                        class="px-2.5 sm:px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer"
+                        :class="locale === 'ja'
+                            ? 'bg-primary text-white shadow-xs'
+                            : 'text-secondary hover:text-primary'
+                            " aria-label="日本語に切り替え" :aria-pressed="locale === 'ja'" @click="setLocale('ja')">
                         JPN
                     </button>
                 </div>
 
-                <!-- Quick Contact Action -->
+                <!-- Quick contact action -->
                 <a id="btn-nav-quick-contact" href="mailto:kautsar.rahman@gmail.com"
                     class="p-2 rounded-full text-primary hover:bg-pill-bg border border-transparent hover:border-border-light transition-all cursor-pointer"
-                    title="Get in touch" aria-label="Send an email">
+                    :title="t('nav.email_title')" :aria-label="t('nav.email_aria')">
                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="20" height="16" x="2" y="4" rx="2"></rect>
@@ -74,10 +80,10 @@ function closeMobileMenu() {
                     </svg>
                 </a>
 
-                <!-- Mobile Hamburger Toggle Button -->
+                <!-- Mobile hamburger toggle -->
                 <button id="btn-mobile-menu" type="button"
                     class="md:hidden p-2 rounded-lg text-primary hover:bg-pill-bg border border-transparent hover:border-border-light transition-all cursor-pointer flex items-center justify-center"
-                    aria-label="Toggle mobile menu" :aria-expanded="isMobileMenuOpen" aria-controls="mobile-menu"
+                    :aria-label="t('nav.menu_aria')" :aria-expanded="isMobileMenuOpen" aria-controls="mobile-menu"
                     @click="isMobileMenuOpen = !isMobileMenuOpen">
                     <svg v-show="!isMobileMenuOpen" id="hamburger-icon-bars" class="w-5 h-5 transition-transform"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -96,27 +102,27 @@ function closeMobileMenu() {
             </div>
         </div>
 
-        <!-- Mobile Pull-Down Dropdown Menu -->
+        <!-- Mobile pull-down dropdown menu -->
         <div id="mobile-menu"
-            class="md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white/98 backdrop-blur-md border-b border-[#EDEDED]"
+            class="md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white/98 backdrop-blur-md border-b border-hairline">
             :class="isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'" :aria-hidden="!isMobileMenuOpen">
             <div class="max-w-6xl mx-auto px-4 py-4 space-y-1">
                 <a id="mobile-nav-about" href="#hero"
                     class="flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-semibold text-primary hover:bg-pill-bg transition-colors"
                     @click="closeMobileMenu">
-                    About
+                    {{ t('nav.about') }}
                     <span class="text-xs text-muted font-mono">01</span>
                 </a>
                 <a id="mobile-nav-work" href="#work"
                     class="flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-semibold text-primary hover:bg-pill-bg transition-colors"
                     @click="closeMobileMenu">
-                    Work
+                    {{ t('nav.work') }}
                     <span class="text-xs text-muted font-mono">02</span>
                 </a>
                 <a id="mobile-nav-contact" href="mailto:kautsar.rahman@gmail.com"
                     class="w-full flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-semibold text-primary hover:bg-pill-bg transition-colors cursor-pointer text-left"
                     @click="closeMobileMenu">
-                    Contact
+                    {{ t('nav.contact') }}
                     <span class="text-xs text-muted font-mono">03</span>
                 </a>
             </div>

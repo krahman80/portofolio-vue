@@ -1,35 +1,31 @@
 <script setup>
-/**
- * Sprint 0 — static footer chrome.
- *
- * Deferred on purpose (see DEVELOPMENT-PLAN):
- * - All copy here is hardcoded English for now; Sprint 1 moves it into
- *   `profile.json` / locale files (FR-3, FR-25).
- * - Email is a plain `mailto:`; the copy-to-clipboard affordance (FR-24)
- *   lands in a later sprint.
- */
+import { useLocale } from '@/composables/useLocale'
+import { useProfile } from '@/composables/useProfile'
+
+const { t, tl } = useLocale()
+const { profile } = useProfile()
+
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 </script>
 
 <template>
-    <footer id="page-footer" class="mt-20 border-t border-[#EDEDED] bg-surface w-full">
+    <footer id="page-footer" class="mt-20 border-t border-hairline bg-surface w-full">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-[#EDEDED]">
-                <!-- Column 1: Monogram & Identity -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-hairline">
+                <!-- Column 1: Monogram & identity -->
                 <div class="md:col-span-7 space-y-3">
                     <div class="flex items-center gap-2">
                         <span class="font-black text-xl tracking-tighter text-primary select-none">
                             KR
                         </span>
                         <span class="font-bold text-sm tracking-tight text-primary">
-                            Kautsar Rahman.
+                            {{ profile.name }}.
                         </span>
                     </div>
                     <p class="text-xs text-secondary leading-relaxed max-w-md">
-                        Web developer crafting thoughtful digital products with architectural
-                        restraint and modern TypeScript standards from Sapporo, Japan.
+                        {{ tl(profile.bioShort) }}
                     </p>
                     <div class="flex items-center gap-2 text-xs text-muted">
                         <svg class="w-3.5 h-3.5 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -40,29 +36,29 @@ function scrollToTop() {
                             </path>
                             <circle cx="12" cy="10" r="3"></circle>
                         </svg>
-                        <span>Sapporo, Hokkaido, Japan 43.0618° N, 141.3545° E</span>
+                        <span>{{ profile.location.city }}, Japan {{ profile.location.coords }}</span>
                     </div>
                 </div>
 
-                <!-- Column 2: Contact & Direct Connect (pushed to the right) -->
+                <!-- Column 2: Contact & direct connect (pushed to the right) -->
                 <div class="md:col-span-4 md:col-start-9 space-y-3 flex flex-col md:items-end md:text-right">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-primary">
-                        Connect
+                        {{ t('footer.connect') }}
                     </h4>
                     <div class="space-y-2 text-xs text-secondary">
                         <p>
-                            Email:
-                            <a href="mailto:kautsar.rahman@gmail.com"
+                            {{ t('footer.email_label') }}
+                            <a :href="`mailto:${profile.email}`"
                                 class="text-primary underline hover:no-underline font-mono cursor-pointer">
-                                kautsar.rahman@gmail.com
+                                {{ profile.email }}
                             </a>
                         </p>
                     </div>
-                    <!-- Social Media Icons -->
+                    <!-- Social icons -->
                     <div class="flex items-center gap-2.5 pt-0.5">
-                        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                        <a :href="profile.social.github" target="_blank" rel="noopener noreferrer"
                             class="p-2 bg-pill-bg border border-border-light rounded-md text-primary hover:bg-primary hover:text-white transition-all cursor-pointer"
-                            title="GitHub profile" aria-label="GitHub profile">
+                            :title="t('footer.github_aria')" :aria-label="t('footer.github_aria')">
                             <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path
@@ -71,9 +67,9 @@ function scrollToTop() {
                                 <path d="M9 18c-4.51 2-5-2-7-2"></path>
                             </svg>
                         </a>
-                        <a href="mailto:kautsar.rahman@gmail.com"
+                        <a :href="`mailto:${profile.email}`"
                             class="p-2 bg-pill-bg border border-border-light rounded-md text-primary hover:bg-primary hover:text-white transition-all cursor-pointer"
-                            title="Send an email" aria-label="Send email">
+                            :title="t('footer.email_aria')" :aria-label="t('footer.email_aria')">
                             <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect width="20" height="16" x="2" y="4" rx="2"></rect>
@@ -81,12 +77,12 @@ function scrollToTop() {
                             </svg>
                         </a>
                     </div>
-                    <!-- Back to Top placed below the social media icons -->
+                    <!-- Back to top, below the social icons -->
                     <div class="pt-1">
                         <button id="btn-footer-back-to-top" type="button"
                             class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-pill-bg border border-border-light rounded-md text-xs font-medium text-primary hover:bg-primary hover:text-white transition-all cursor-pointer"
-                            aria-label="Back to top" @click="scrollToTop">
-                            Back to top
+                            :aria-label="t('footer.back_to_top')" @click="scrollToTop">
+                            {{ t('footer.back_to_top') }}
                             <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="m5 12 7-7 7 7"></path>
@@ -97,12 +93,10 @@ function scrollToTop() {
                 </div>
             </div>
 
-            <!-- Bottom Copyright Strip -->
+            <!-- Bottom copyright strip -->
             <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-muted gap-3">
-                <p>© 2026 Kautsar Rahman. All rights reserved.</p>
-                <p class="font-mono text-[11px]">
-                    Sapporo, Japan — Monochromatic Design System
-                </p>
+                <p>{{ t('footer.copyright') }}</p>
+                <p class="font-mono text-[11px]">{{ t('footer.colophon') }}</p>
             </div>
         </div>
     </footer>

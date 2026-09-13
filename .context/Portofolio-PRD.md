@@ -49,21 +49,24 @@ This PRD defines the rebuild of that page as a **Vue 3 + Tailwind CSS single-pag
 
 The existing `index.html` already establishes the design system this rebuild must preserve:
 
-| Token                  | Value                                                                         | Notes                                       |
-| ---------------------- | ----------------------------------------------------------------------------- | ------------------------------------------- |
-| `--color-primary`      | `#0E100F`                                                                     | near-black, text/buttons/nav                |
-| `--color-secondary`    | `#6B6B6B`                                                                     | body copy                                   |
-| `--color-surface`      | `#FFFFFF`                                                                     | page background                             |
-| `--color-border-light` | `#D4D4D4`                                                                     | borders                                     |
-| `--color-pill-bg`      | `#F7F7F7`                                                                     | tag/pill fill                               |
-| `--color-muted`        | `#878787`                                                                     | tertiary text                               |
-| Font                   | Plus Jakarta Sans                                                             | ⚠️ see Risk R4 — no Japanese glyph coverage |
-| Shape                  | `clip-path` angled corners on photo + cards, 0 shadow except soft card shadow | signature visual motif, must be preserved   |
-| Decoration             | halftone dot-grid clusters, inverted "highlighter" span on headline           | preserve as-is                              |
+| Token                   | Value                                                                         | Notes                                                                                             |
+| ----------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `--color-primary`       | `#0E100F`                                                                     | near-black, text/buttons/nav                                                                      |
+| `--color-secondary`     | `#6B6B6B`                                                                     | body copy                                                                                         |
+| `--color-surface`       | `#FFFFFF`                                                                     | page background                                                                                   |
+| `--color-border-light`  | `#D4D4D4`                                                                     | borders                                                                                           |
+| `--color-pill-bg`       | `#F7F7F7`                                                                     | tag/pill fill                                                                                     |
+| `--color-muted`         | `#878787`                                                                     | tertiary text                                                                                     |
+| `--color-hairline`      | `#EDEDED`                                                                     | lighter divider/pill outline than `-border-light`; also the portrait backdrop fill (added §11.12) |
+| `--color-emphasis`      | `#3A3A3A`                                                                     | skill pill text; sits between primary and secondary (added §11.12)                                |
+| `--color-primary-hover` | `#2A2C2B`                                                                     | canonical primary-button hover state (added §11.12)                                               |
+| Font                    | Plus Jakarta Sans                                                             | ⚠️ see Risk R4 — no Japanese glyph coverage                                                       |
+| Shape                   | `clip-path` angled corners on photo + cards, 0 shadow except soft card shadow | signature visual motif, must be preserved                                                         |
+| Decoration              | halftone dot-grid clusters, inverted "highlighter" span on headline           | preserve as-is                                                                                    |
 
 Existing sections to carry over 1:1 in behavior: sticky nav with EN/JPN switcher and mobile hamburger menu, hero (portrait + headline + bio + skill pills + CTAs + copy-email action), Work grid (currently 6 static cards), project preview modal, contact modal, footer.
 
-**Token usage convention (confirmed, §11.9).** The six palette tokens above are registered as Tailwind theme tokens, so components reference them through their generated utilities — `text-primary`, `text-secondary`, `text-muted`, `bg-surface`, `bg-pill-bg`, `border-border-light` — instead of repeating raw hex arbitrary values such as `text-[#0E100F]`. Rendering is byte-identical; the intent is a single source of truth for the palette. `#EDEDED` (hairline borders) is intentionally **not** one of the six tokens and stays as an arbitrary value.
+**Token usage convention (confirmed, §11.9).** Every palette entry above is registered as a Tailwind theme token, so components reference them through their generated utilities — `text-primary`, `text-secondary`, `text-muted`, `text-emphasis`, `bg-surface`, `bg-pill-bg`, `bg-hairline`, `border-border-light`, `border-hairline`, `hover:bg-primary-hover` — instead of repeating raw hex arbitrary values such as `text-[#0E100F]`. Rendering is byte-identical; the intent is a single source of truth for the palette. The original six entries came straight from `template.html`'s `@theme` block; the last three were promoted in §11.12 because they recur as raw hex throughout the template without ever having been declared as tokens there.
 
 ## 6. Functional Requirements
 
@@ -242,9 +245,23 @@ src/
 │   ├── en.json
 │   └── ja.json
 └── assets/
-    ├── profile/ (3 avatar images)
-    └── works/<project-id>/ (carousel images per project)
+    └── main.css
+
+public/
+└── assets/
+    ├── profile/ (3 avatar images — avatar-1.jpg, avatar-2.jpg, avatar-3.jpg)
+    └── works/<project-id>/ (carousel images per project, e.g. works/sapporo-snow/1.jpg)
 ```
+
+**Where static images live (confirmed, §11.11).** `profile.json` and `works.json` store
+**root-absolute runtime URLs** (`/assets/profile/avatar-1.jpg`, `/assets/works/sapporo-snow/1.jpg`),
+so those images belong in **`public/assets/`** — Vite copies `public/` verbatim into `dist/`,
+so the path in the JSON _is_ the path served in production, subfolders included.
+
+Do **not** put them in `src/assets/`: anything under `src/` is processed by the bundler, which
+hashes and flattens it (e.g. `dist/assets/avatar_1-C4IEsjFB.jpg`). That breaks the JSON paths,
+forces a glob/import resolver, and loses the per-project folder structure §7.2 relies on.
+`src/assets/` is only for build-processed assets like `main.css`.
 
 **Library choices to confirm with Kautsar (see §11 Assumptions):**
 
@@ -288,8 +305,15 @@ The gaps in the original draft have now been resolved as follows:
 6. **Avatar switcher placement:** confirmed — visible only near the hero photo (FR-8). Not duplicated in a settings/utility menu or anywhere else in the header/footer.
 7. **Project detail navigation:** confirmed — **modal only, no routing.** No deep-linkable URLs per project (e.g. no `/#/work/sapporo-snow`); Vue Router is not needed for this build (consistent with the "no routed sub-pages" note in §6.1/§8).
 8. **Analytics:** confirmed — **no analytics requirement.** No GA4/Plausible/etc. is added in this build.
-9. **Design token usage:** confirmed — components consume the six palette tokens from §5 through Tailwind's generated semantic utilities (`text-primary`, `text-secondary`, `text-muted`, `bg-surface`, `bg-pill-bg`, `border-border-light`) rather than raw hex arbitrary values. Values are identical, so this is a maintainability decision, not a visual one. `#EDEDED` has no token and remains an arbitrary value.
+9. **Design token usage:** confirmed — components consume every palette token in §5 through Tailwind's generated semantic utilities (`text-primary`, `text-secondary`, `text-muted`, `text-emphasis`, `bg-surface`, `bg-pill-bg`, `bg-hairline`, `border-border-light`, `border-hairline`, `hover:bg-primary-hover`) rather than raw hex arbitrary values. Values are identical, so this is a maintainability decision, not a visual one.
 10. **Deployment target:** confirmed — the site is deployed at the **root of its own domain**, not a subdomain and not a subdirectory. The default Vite `base: '/'` is therefore correct and no `base` override is needed.
+11. **Static image location:** confirmed — the data model in §7.1/§7.2 is authoritative over the source tree in §8. Because `profile.json` / `works.json` store root-absolute runtime URLs (`/assets/profile/avatar-1.jpg`), profile and project images live in **`public/assets/`**, which Vite copies verbatim to `dist/`. `src/assets/` is reserved for bundler-processed assets such as `main.css`. This keeps the JSON the single source of truth and preserves the per-project subfolders §7.2 requires (an earlier draft of §8 incorrectly nested these under `src/assets/`; §8 has been corrected).
+12. **Three additional palette tokens:** confirmed — `--color-hairline` (`#EDEDED`), `--color-emphasis` (`#3A3A3A`) and `--color-primary-hover` (`#2A2C2B`) were promoted to tokens. All three are used heavily in `template.html` as raw hex but were never declared in its `@theme` block, so the original six-token list in §5 was incomplete rather than deliberately minimal:
+    - `#EDEDED` appeared **46 times** (vs. ~17 for the tokenized `#D4D4D4`), as header/footer dividers, pill outlines, card footer rules, and the portrait backdrop fill — so the design's most-used border tone was the one without a token. This supersedes the earlier §11.9 claim that `#EDEDED` "has no token and remains an arbitrary value", which was wrong in practice.
+    - `#3A3A3A` is the skill-pill text colour, sitting between `--color-primary` and `--color-secondary`.
+    - `#2A2C2B` normalises the primary-button hover state. `template.html` had drifted across three different values for this one intent (`#2A2C2B`, `#282B29` on the card Preview buttons, `#2B2E2D` on the contact submit) — a latent inconsistency, not a deliberate distinction. One token now covers it.
+
+    The `#181A19` / `#1F2221` / `#262928` family used by the CSS card mockups is deliberately **not** tokenized: FR-15/FR-19 replace those mockups with real project screenshots in Sprints 3–4.
 
 ## 12. Open Questions
 

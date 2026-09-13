@@ -1,0 +1,53 @@
+{
+  "name": "Kautsar Rahman",
+  "role": {
+    "en": "Independent Web Developer & Engineer",
+    "ja": "ウェブエンジニア / フロントエンド・フルスタック"
+  },
+  "status": {
+    "en": "Available for contracts",
+    "ja": "新規案件対応可能"
+  },
+  "location": {
+    "city": "Sapporo, Hokkaido",
+    "coords": "43°03'N 141°21'E"
+  },
+  "bio": {
+    "en": "I design and build high-performance web applications combining architectural precision, typography clarity, and rock-solid engineering. Grounded in the calm northern atmosphere of Hokkaido, I partner with companies worldwide on modern TypeScript, React, and full-stack software.",
+    "ja": "北国・北海道の落ち着いた環境を拠点に、妥協のないアーキテクチャ設計と美しいタイポグラフィ、堅牢なエンジニアリングを融合させたWebアプリケーションを開発しています。TypeScript、React、フルスタック技術で国内外のプロジェクトを支援します。"
+  },
+  "bioShort": {
+    "en": "Web developer crafting thoughtful digital products with architectural restraint and modern TypeScript standards from Sapporo, Japan.",
+    "ja": "北海道・札幌を拠点に、モダンなTypeScript技術と無駄のない設計思想でWeb体験を構築するエンジニア。"
+  },
+  "skills": [
+    "Lavarel & PHP",
+    "WordPress & CMS",
+    "Tailwind CSS v4",
+    "Vue 3",
+    "Asp.net Core"
+  ],
+  "email": "kautsar.rahman@gmail.com",
+  "social": {
+    "github": "https://github.com",
+    "linkedin": "https://www.linkedin.com"
+  },
+  "avatars": [
+    {
+      "id": "avatar-1",
+      "src": "/assets/profile/avatar-1.jpg",
+      "alt": "Kautsar Rahman portrait, option 1"
+    },
+    {
+      "id": "avatar-2",
+      "src": "/assets/profile/avatar-2.jpg",
+      "alt": "Kautsar Rahman portrait, option 2"
+    },
+    {
+      "id": "avatar-3",
+      "src": "/assets/profile/avatar-3.jpg",
+      "alt": "Kautsar Rahman portrait, option 3"
+    }
+  ],
+  "defaultAvatarId": "avatar-1"
+}

@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "about": "プロフィール",
+    "work": "実績",
+    "contact": "お問い合わせ",
+    "brand_aria": "カウツァル・ラーマン ポートフォリオ",
+    "email_aria": "メールを送信",
+    "email_title": "お問い合わせ",
+    "menu_aria": "メニューを開閉する"
+  },
+  "hero": {
+    "headline_before": "こんにちは、カウツァル・ラーマンです — 札幌拠点の",
+    "headline_highlight": "ウェブ開発者",
+    "headline_after": "として、研ぎ澄まされたデジタル体験を構築します。",
+    "cta_contact": "お問い合わせ",
+    "cta_work": "実績を見る",
+    "copy_email_title": "メールアドレスをコピー",
+    "copied": "コピーしました"
+  },
+  "footer": {
+    "connect": "連絡先・リンク",
+    "email_label": "メール:",
+    "github_aria": "GitHub プロフィール",
+    "email_aria": "メールを送信",
+    "back_to_top": "トップへ戻る",
+    "copyright": "© 2026 Kautsar Rahman. All rights reserved.",
+    "colophon": "札幌 — モノクローム・デザインシステム"
+  }
+}

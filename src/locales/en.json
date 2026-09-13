@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "about": "About",
+    "work": "Work",
+    "contact": "Contact",
+    "brand_aria": "Kautsar Rahman Portfolio",
+    "email_aria": "Send an email",
+    "email_title": "Get in touch",
+    "menu_aria": "Toggle mobile menu"
+  },
+  "hero": {
+    "headline_before": "Hi, I'm Kautsar Rahman — a",
+    "headline_highlight": "Web Developer",
+    "headline_after": "crafting robust digital systems from Sapporo, Japan.",
+    "cta_contact": "Contact me",
+    "cta_work": "Check my work",
+    "copy_email_title": "Copy email to clipboard",
+    "copied": "Copied"
+  },
+  "footer": {
+    "connect": "Connect",
+    "email_label": "Email:",
+    "github_aria": "GitHub profile",
+    "email_aria": "Send email",
+    "back_to_top": "Back to top",
+    "copyright": "© 2026 Kautsar Rahman. All rights reserved.",
+    "colophon": "Sapporo, Japan — Monochromatic Design System"
+  }
+}

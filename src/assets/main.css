@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
- * Design tokens — ported 1:1 from template.html's @theme block (PRD §5).
+ * Design tokens — the six palette entries from template.html's @theme block,
+ * plus three values that recur as raw hex throughout the template but were
+ * never promoted to tokens there. See PRD §5.
  * Do not introduce new palette values; extend these instead.
  * ------------------------------------------------------------------------- */
 @theme {
@@ -11,6 +13,18 @@
   --color-border-light: #d4d4d4;
   --color-pill-bg: #f7f7f7;
   --color-muted: #878787;
+
+  /* Lighter hairline than --color-border-light: header/footer dividers, pill
+     outlines, card footer rules, and the portrait backdrop fill. */
+  --color-hairline: #ededed;
+
+  /* Sits between --color-primary and --color-secondary; used for skill pill text. */
+  --color-emphasis: #3a3a3a;
+
+  /* Canonical "darken the primary button" hover state. template.html drifted
+     across #2A2C2B / #282B29 / #2B2E2D for this same intent — one token now. */
+  --color-primary-hover: #2a2c2b;
+
   --font-sans:
     "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;

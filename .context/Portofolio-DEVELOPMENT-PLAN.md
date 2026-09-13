@@ -32,6 +32,10 @@ Two sprints are **blocked on assets that only Kautsar can supply** — flagging 
 
 If these assets aren't ready when their sprint comes up, either reorder the backlog (pull forward a sprint that isn't asset-blocked) or use temporary placeholder images so the component work isn't stalled — but real assets must land before that sprint is marked Done.
 
+**Where the files go:** drop them in **`public/assets/`** — `public/assets/profile/avatar-1.jpg` for the three portraits, and `public/assets/works/<project-id>/1.jpg` for each project's screenshots — then reference them from `profile.json` / `works.json` with the matching root-absolute path. Paths must line up exactly, since the JSON path is the URL served in production. See PRD §8 "Where static images live" and §11.11.
+
+_Status:_ the 3 profile photos have landed, so Sprint 2's asset blocker is cleared. Sprint 4's screenshots are still outstanding.
+
 ## 3. Sprint Backlog
 
 ---
@@ -47,7 +51,7 @@ If these assets aren't ready when their sprint comes up, either reorder the back
 **Tasks:**
 
 - [ ] Scaffold project with Vite + Vue 3 (Composition API) + Tailwind CSS
-- [ ] Port design tokens from `index.html`'s `@theme` block into Tailwind config / CSS variables (colors, font stacks), and consume them **exclusively via their generated utilities** (`text-primary`, `bg-pill-bg`, `border-border-light`, …) rather than raw hex arbitrary values — see PRD §5 "Token usage convention" and §11.9
+- [ ] Port design tokens from `index.html`'s `@theme` block into Tailwind config / CSS variables (colors, font stacks), and consume them **exclusively via their generated utilities** (`text-primary`, `bg-pill-bg`, `border-border-light`, `border-hairline`, …) rather than raw hex arbitrary values — see PRD §5 "Token usage convention", §11.9 and §11.12. Note: `template.html` uses three recurring colours (`#EDEDED`, `#3A3A3A`, `#2A2C2B`) that its own `@theme` block never declared — those are promoted to tokens too, so don't assume the six documented entries are exhaustive when porting a new section
 - [ ] Add Noto Sans JP alongside Plus Jakarta Sans; wire a `:lang(ja)` font-family rule (NFR-8)
 - [ ] Recreate the `clipped-corner-photo`, `clipped-corner-card`, `dot-grid-pattern`, `highlighter-badge` CSS utilities as shared styles
 - [ ] Build static `NavBar.vue` (logo, nav links, language switcher shell — non-functional toggle for now) and `Footer.vue` shells
