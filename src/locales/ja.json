@@ -6,12 +6,14 @@
     "brand_aria": "カウツァル・ラーマン ポートフォリオ",
     "email_aria": "メールを送信",
     "email_title": "お問い合わせ",
-    "menu_aria": "メニューを開閉する"
+    "menu_aria": "メニューを開閉する",
+    "language_aria": "言語"
   },
   "hero": {
     "headline_before": "こんにちは、カウツァル・ラーマンです — 札幌拠点の",
     "headline_highlight": "ウェブ開発者",
     "headline_after": "として、研ぎ澄まされたデジタル体験を構築します。",
+    "avatar_picker_label": "プロフィール写真を選択",
     "cta_contact": "お問い合わせ",
     "cta_work": "実績を見る",
     "copy_email_title": "メールアドレスをコピー",

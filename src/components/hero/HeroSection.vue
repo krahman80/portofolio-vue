@@ -1,20 +1,15 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
+import AvatarSwitcher from '@/components/hero/AvatarSwitcher.vue'
 import SkillPills from '@/components/hero/SkillPills.vue'
 import { useLocale } from '@/composables/useLocale'
 import { useProfile } from '@/composables/useProfile'
 
 const { t, tl } = useLocale()
-const { profile, avatars } = useProfile()
 
-/**
- * Sprint 1 shows the default portrait only. Sprint 2 adds the 3-thumbnail
- * switcher plus localStorage persistence on top of `useProfile`.
- */
-const avatar = computed(
-    () => avatars.find((entry) => entry.id === profile.defaultAvatarId) ?? avatars[0],
-)
+/** `selectedAvatar` tracks the visitor's pick (FR-7–FR-9); the picker is `AvatarSwitcher`. */
+const { profile, selectedAvatar } = useProfile()
 
 const copied = ref(false)
 
@@ -37,7 +32,8 @@ async function copyEmail() {
         class="relative grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-10 items-start pt-2 sm:pt-6 scroll-mt-24">
         <!-- Left Column: Portrait with circular frame & halftone dot-grid accents -->
         <div id="hero-portrait-column"
-            class="lg:col-span-5 flex justify-center lg:justify-start order-1 lg:order-1 pt-0 lg:pt-12.5">
+            class="lg:col-span-5 flex flex-col items-center lg:items-start order-1 lg:order-1 pt-0 lg:pt-12.5">
+            <!-- Portrait, with its halftone dot-grid accents anchored to the circle -->
             <div class="relative w-70 sm:w-85">
                 <!-- Decorative halftone dot-grid cluster (top-right) -->
                 <div id="hero-dot-grid-top"
@@ -53,7 +49,7 @@ async function copyEmail() {
                 <div class="relative z-10 bg-surface p-2 border border-border-light rounded-full shadow-sm">
                     <div id="hero-portrait-frame"
                         class="relative w-full aspect-square bg-hairline rounded-full overflow-hidden">
-                        <img id="hero-portrait-image" :src="avatar.src" :alt="avatar.alt"
+                        <img id="hero-portrait-image" :src="selectedAvatar.src" :alt="selectedAvatar.alt"
                             class="w-full h-full object-cover object-center grayscale contrast-125 brightness-95 transition-transform duration-500 hover:scale-105" />
 
                         <!-- Monochromatic gradient vignette -->
@@ -72,22 +68,31 @@ async function copyEmail() {
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Location tag below portrait -->
-                <div class="mt-4 flex items-center justify-between px-2 text-xs text-muted">
-                    <div class="flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round">
-                            <path
-                                d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
-                            </path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        <span>{{ profile.location.city }}</span>
-                    </div>
-                    <span class="font-mono text-[11px]">{{ profile.location.coords }}</span>
+            <!-- Location tag — below the portrait -->
+            <div class="w-70 sm:w-85 mt-4 flex items-center justify-between px-2 text-xs text-muted">
+                <div class="flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path
+                            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+                        </path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>{{ profile.location.city }}</span>
                 </div>
+                <span class="font-mono text-[11px]">{{ profile.location.coords }}</span>
+            </div>
+
+            <!--
+                FR-7 – FR-10. The wrapper matches the portrait's width so the pill is centred
+                under the circle at every breakpoint, while the portrait itself keeps the
+                template's left alignment on large screens. Hero-only (§11.6).
+            -->
+            <div class="w-70 sm:w-85 mt-5 flex justify-center">
+                <AvatarSwitcher />
             </div>
         </div>
 

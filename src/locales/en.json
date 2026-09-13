@@ -6,12 +6,14 @@
     "brand_aria": "Kautsar Rahman Portfolio",
     "email_aria": "Send an email",
     "email_title": "Get in touch",
-    "menu_aria": "Toggle mobile menu"
+    "menu_aria": "Toggle mobile menu",
+    "language_aria": "Language"
   },
   "hero": {
     "headline_before": "Hi, I'm Kautsar Rahman — a",
     "headline_highlight": "Web Developer",
     "headline_after": "crafting robust digital systems from Sapporo, Japan.",
+    "avatar_picker_label": "Choose a profile photo",
     "cta_contact": "Contact me",
     "cta_work": "Check my work",
     "copy_email_title": "Copy email to clipboard",

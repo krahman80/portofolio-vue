@@ -10,7 +10,7 @@
   },
   "location": {
     "city": "Sapporo, Hokkaido",
-    "coords": "43°03'N 141°21'E"
+    "coords": "43.06377, 141.34233"
   },
   "bio": {
     "en": "I design and build high-performance web applications combining architectural precision, typography clarity, and rock-solid engineering. Grounded in the calm northern atmosphere of Hokkaido, I partner with companies worldwide on modern TypeScript, React, and full-stack software.",
@@ -40,12 +40,12 @@
     },
     {
       "id": "avatar-2",
-      "src": "/assets/profile/avatar-2.jpg",
+      "src": "/assets/profile/avatar-4.jpg",
       "alt": "Kautsar Rahman portrait, option 2"
     },
     {
       "id": "avatar-3",
-      "src": "/assets/profile/avatar-3.jpg",
+      "src": "/assets/profile/avatar-5.jpg",
       "alt": "Kautsar Rahman portrait, option 3"
     }
   ],

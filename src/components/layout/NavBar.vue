@@ -50,7 +50,7 @@ function closeMobileMenu() {
                 <!-- Language switcher (EN / JPN) -->
                 <div id="lang-switcher"
                     class="flex items-center bg-pill-bg p-0.5 rounded-full border border-border-light" role="group"
-                    aria-label="Language">
+                    :aria-label="t('nav.language_aria')">
                     <button id="btn-lang-en" type="button"
                         class="px-2.5 sm:px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer"
                         :class="locale === 'en'
@@ -104,7 +104,7 @@ function closeMobileMenu() {
 
         <!-- Mobile pull-down dropdown menu -->
         <div id="mobile-menu"
-            class="md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white/98 backdrop-blur-md border-b border-hairline">
+            class="md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white/98 backdrop-blur-md border-b border-hairline"
             :class="isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'" :aria-hidden="!isMobileMenuOpen">
             <div class="max-w-6xl mx-auto px-4 py-4 space-y-1">
                 <a id="mobile-nav-about" href="#hero"
