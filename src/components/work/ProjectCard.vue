@@ -34,7 +34,7 @@ const pad = (n) => String(n).padStart(2, '0')
         -->
         <div
             class="relative w-full h-48 bg-[#181A19] clipped-corner-card overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
-            <img v-if="cover" :src="cover.src" :alt="cover.alt" loading="lazy"
+            <img v-if="cover" :src="cover.src" :alt="cover.alt" loading="lazy" decoding="async"
                 class="absolute inset-0 w-full h-full object-cover object-top" />
             <div v-else
                 class="absolute inset-0 bg-linear-to-br from-[#1F2221] to-primary p-4 flex flex-col justify-between text-zinc-300 select-none">

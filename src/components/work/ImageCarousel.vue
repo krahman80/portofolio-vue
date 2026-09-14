@@ -75,7 +75,7 @@ function onTouchEnd(event) {
     -->
     <div class="relative w-full aspect-4/3 bg-[#181A19] overflow-hidden select-none" @touchstart.passive="onTouchStart"
         @touchend.passive="onTouchEnd">
-        <img v-if="slide" :key="slide.src" :src="slide.src" :alt="slide.alt" loading="lazy"
+        <img v-if="slide" :key="slide.src" :src="slide.src" :alt="slide.alt" loading="lazy" decoding="async"
             class="carousel-slide absolute inset-0 w-full h-full object-cover object-top" />
 
         <template v-if="count > 1">
@@ -103,8 +103,10 @@ function onTouchEnd(event) {
             </span>
 
             <div class="absolute bottom-3 inset-x-0 flex justify-center gap-2">
+                <!-- .carousel-dot expands the tap target to 24x24 via ::after — WCAG 2.5.8 —
+                     without changing the 8px visual dot or the row's spacing. -->
                 <button v-for="(image, i) in images" :key="image.src" type="button"
-                    class="w-2 h-2 rounded-full transition-all cursor-pointer" :class="i === current
+                    class="carousel-dot relative w-2 h-2 rounded-full transition-all cursor-pointer" :class="i === current
                         ? 'bg-white scale-125'
                         : 'bg-white/40 hover:bg-white/70'
                         " :aria-label="t('work.go_to_image', { n: i + 1 })" :aria-current="i === current"
@@ -127,6 +129,13 @@ function onTouchEnd(event) {
 
 .carousel-slide {
     animation: carousel-fade 200ms ease;
+}
+
+/* WCAG 2.5.8 — the dot is 8px visually, but its tap target must be at least 24x24. */
+.carousel-dot::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
 }
 
 /* NFR-4 — no slide animation for visitors who ask for reduced motion. */

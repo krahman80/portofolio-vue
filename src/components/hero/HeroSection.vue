@@ -49,7 +49,13 @@ async function copyEmail() {
                 <div class="relative z-10 bg-surface p-2 border border-border-light rounded-full shadow-sm">
                     <div id="hero-portrait-frame"
                         class="relative w-full aspect-square bg-hairline rounded-full overflow-hidden">
+                        <!--
+                            Above the fold, so deliberately NOT lazy-loaded: this is the LCP
+                            image, and `loading="lazy"` here would delay it. Every image
+                            below the fold is lazy (cards, carousel, swatches).
+                        -->
                         <img id="hero-portrait-image" :src="selectedAvatar.src" :alt="selectedAvatar.alt"
+                            fetchpriority="high" decoding="async"
                             class="w-full h-full object-cover object-center grayscale contrast-125 brightness-95 transition-transform duration-500 hover:scale-105" />
 
                         <!-- Monochromatic gradient vignette -->

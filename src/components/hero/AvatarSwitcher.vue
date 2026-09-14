@@ -25,11 +25,12 @@ const { avatars, selectedAvatarId, setAvatar } = useProfile()
         <button v-for="avatar in avatars" :key="avatar.id" type="button"
             class="w-9 h-9 rounded-full overflow-hidden border-2 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             :class="avatar.id === selectedAvatarId
-                    ? 'border-primary opacity-100'
-                    : 'border-transparent opacity-50 hover:opacity-100'
-                " :aria-label="avatar.alt" :aria-pressed="avatar.id === selectedAvatarId" @click="setAvatar(avatar.id)">
+                ? 'border-primary opacity-100'
+                : 'border-transparent opacity-50 hover:opacity-100'
+                " :aria-label="avatar.alt" :aria-pressed="avatar.id === selectedAvatarId"
+            @click="setAvatar(avatar.id)">
             <!-- Alt text lives on the button; an empty alt avoids a double announcement. -->
-            <img :src="avatar.src" alt=""
+            <img :src="avatar.src" alt="" loading="lazy" decoding="async"
                 class="w-full h-full object-cover object-center grayscale contrast-125 brightness-95" />
         </button>
     </div>

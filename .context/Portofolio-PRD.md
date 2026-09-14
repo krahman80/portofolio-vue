@@ -56,7 +56,7 @@ The existing `index.html` already establishes the design system this rebuild mus
 | `--color-surface`       | `#FFFFFF`                                                                     | page background                                                                                   |
 | `--color-border-light`  | `#D4D4D4`                                                                     | borders                                                                                           |
 | `--color-pill-bg`       | `#F7F7F7`                                                                     | tag/pill fill                                                                                     |
-| `--color-muted`         | `#878787`                                                                     | tertiary text                                                                                     |
+| `--color-muted`         | `#707070`                                                                     | tertiary text — darkened from `#878787` for WCAG AA, see §11.13                                   |
 | `--color-hairline`      | `#EDEDED`                                                                     | lighter divider/pill outline than `-border-light`; also the portrait backdrop fill (added §11.12) |
 | `--color-emphasis`      | `#3A3A3A`                                                                     | skill pill text; sits between primary and secondary (added §11.12)                                |
 | `--color-primary-hover` | `#2A2C2B`                                                                     | canonical primary-button hover state (added §11.12)                                               |
@@ -272,7 +272,7 @@ forces a glob/import resolver, and loses the per-project folder structure §7.2 
 ## 9. Non-Functional Requirements
 
 - **NFR-1 (Performance):** Images lazy-load (`loading="lazy"`); carousel images for non-active slides are not eagerly fetched at full priority.
-- **NFR-2 (Accessibility):** WCAG AA color contrast (already satisfied by the existing monochrome palette), full keyboard operability for nav, avatar switcher, and carousel, visible focus states, modals trap focus and restore it on close, all interactive icons have `aria-label`s.
+- **NFR-2 (Accessibility):** WCAG AA color contrast — **not** automatically satisfied by the monochrome palette; it must be checked per token. `--color-muted` failed this and was darkened (§11.13). Also: full keyboard operability for nav, avatar switcher, and carousel, visible focus states, modals trap focus and restore it on close, all interactive icons have `aria-label`s, and interactive targets meet the 24×24 minimum (WCAG 2.5.8).
 - **NFR-3 (Responsiveness):** Same breakpoints as the current Tailwind build (mobile / `md` / `lg`); Work grid: 1 col mobile → 2 col tablet → 3 col desktop, matching current behavior.
 - **NFR-4 (Reduced motion):** Respect `prefers-reduced-motion` for card hover, modal transitions, and carousel slide animation.
 - **NFR-5 (No backend):** The production build is static output only (HTML/CSS/JS/JSON/images) — deployable by copying `dist/` to any static host, no server process required.
@@ -314,6 +314,15 @@ The gaps in the original draft have now been resolved as follows:
     - `#2A2C2B` normalises the primary-button hover state. `template.html` had drifted across three different values for this one intent (`#2A2C2B`, `#282B29` on the card Preview buttons, `#2B2E2D` on the contact submit) — a latent inconsistency, not a deliberate distinction. One token now covers it.
 
     The `#181A19` / `#1F2221` / `#262928` family used by the CSS card mockups is deliberately **not** tokenized: FR-15/FR-19 replace those mockups with real project screenshots in Sprints 3–4.
+
+13. **`--color-muted` darkened for WCAG AA:** confirmed — `#878787` → **`#707070`**. The original value failed the AA contrast requirement for normal text, which NFR-2 had incorrectly assumed the palette already met:
+
+    | Against                       | `#878787` | `#707070`     | Required |
+    | ----------------------------- | --------- | ------------- | -------- |
+    | `--color-surface` (`#FFFFFF`) | 3.59:1 ❌ | **4.95:1** ✅ | 4.5:1    |
+    | `--color-pill-bg` (`#F7F7F7`) | 3.35:1 ❌ | **4.62:1** ✅ | 4.5:1    |
+
+    It is used in nine places, all at `text-xs` (12px) — so all of them were failing, not just an edge case: the hero location tag, the footer colophon and location line, the mobile menu `01`/`02`/`03` markers, the modal project ID and stats lines, and the copy-email button. `#707070` is the smallest step that clears 4.5:1 on **both** backgrounds the token is used on (`#767676` would still fail on `pill-bg`). Every other palette pair already passed — the nearest is `--color-secondary` at 5.33:1. This is a deliberate visual change to a previously "confirmed" value: the requirement (NFR-2) outranks the specific hex, and NFR-2's text has been corrected so it no longer claims contrast is automatically satisfied.
 
 ## 12. Open Questions
 

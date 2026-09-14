@@ -103,9 +103,15 @@ function closeMobileMenu() {
         </div>
 
         <!-- Mobile pull-down dropdown menu -->
+        <!--
+            `inert` (not just aria-hidden) while closed: the collapsed menu still contains
+            focusable links, and an aria-hidden container with focusable descendants is an
+            accessibility error — keyboard users would tab into invisible links.
+        -->
         <div id="mobile-menu"
             class="md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white/98 backdrop-blur-md border-b border-hairline"
-            :class="isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'" :aria-hidden="!isMobileMenuOpen">
+            :class="isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'" :aria-hidden="!isMobileMenuOpen"
+            :inert="!isMobileMenuOpen">
             <div class="max-w-6xl mx-auto px-4 py-4 space-y-1">
                 <a id="mobile-nav-about" href="#hero"
                     class="flex items-center justify-between px-3.5 py-3 rounded-lg text-sm font-semibold text-primary hover:bg-pill-bg transition-colors"
