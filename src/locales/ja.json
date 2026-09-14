@@ -19,6 +19,14 @@
     "copy_email_title": "メールアドレスをコピー",
     "copied": "コピーしました"
   },
+  "work": {
+    "eyebrow": "厳選プロジェクト",
+    "title": "開発実績・プロダクト",
+    "subtitle": "TypeScript、モダンフレームワーク、スケーラブルな設計で構築した代表的なWebアプリケーション一覧です。",
+    "preview": "プレビュー",
+    "preview_coming_soon": "プレビューは近日公開",
+    "github": "GitHub リポジトリ"
+  },
   "footer": {
     "connect": "連絡先・リンク",
     "email_label": "メール:",

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "kita-foodtruck",
+    "category": "WEB APPS",
+    "sortOrder": 1,
+    "title": {
+      "en": "Kita Food Truck Finder",
+      "ja": "Kita フードトラック・ファインダー"
+    },
+    "description": {
+      "en": "A single web page designed for customers to view the food truck's information. A protected dashboard intended for the truck owners or administrators to manage operations or update site content",
+      "ja": "お客様がフードトラックの情報を閲覧するためのシングルページ。オーナーや管理者が運営管理やサイト内容の更新を行える、認証で保護された管理ダッシュボードを備えています。"
+    },
+    "stats": "dashboard management • food truck information",
+    "tags": [
+      "PHP",
+      "Laravel",
+      "Tailwind CSS",
+      "Vue 3"
+    ],
+    "githubUrl": "https://github.com/krahman80/kita-foodtruck",
+    "previewUrl": "https://kita.mikalabs.com",
+    "images": [
+      {
+        "src": "/assets/works/kita-foodtruck/1.jpg",
+        "alt": "Kita Chili Dogs homepage showing the featured Sapporo Classic 2 chili dog and today's truck location with map"
+      },
+      {
+        "src": "/assets/works/kita-foodtruck/2.jpg",
+        "alt": "Kita Chili Dogs menu and pricing section alongside the founders' brand story"
+      },
+      {
+        "src": "/assets/works/kita-foodtruck/3.jpg",
+        "alt": "Kita Chili Dogs halal sourcing guarantee and allergen information page"
+      }
+    ]
+  },
+  {
+    "id": "pramana",
+    "category": "WP Themes",
+    "sortOrder": 2,
+    "title": {
+      "en": "Pramana staffing Agency",
+      "ja": "プラマナ 人材紹介エージェンシー"
+    },
+    "description": {
+      "en": "Pramana Staffing Agency, Connecting leaders with top-tier talent in SouthEast Asia.",
+      "ja": "東南アジアを拠点に、企業のリーダーと第一級の人材を結びつけるプラマナ人材紹介エージェンシー。"
+    },
+    "stats": "Wordpress • classic themes",
+    "tags": [
+      "PHP",
+      "Wordpress",
+      "Classic Themes",
+      "Css"
+    ],
+    "githubUrl": "https://github.com/krahman80/visitor-request-form",
+    "previewUrl": "https://wp-one.mikalabs.com",
+    "images": [
+      {
+        "src": "/assets/works/pramana/1.png",
+        "alt": "Pramana Staffing Agency homepage hero with the 'Empowering Teams, Redefining Futures' headline"
+      },
+      {
+        "src": "/assets/works/pramana/2.png",
+        "alt": "Pramana Staffing Agency author archive listing published articles"
+      }
+    ]
+  },
+  {
+    "id": "koya",
+    "category": "WP Themes",
+    "sortOrder": 3,
+    "title": {
+      "en": "Koya Retail Artisan Theme",
+      "ja": "Koya リテール・アルチザン テーマ"
+    },
+    "description": {
+      "en": "Custom WordPress and WooCommerce theme tailored for local retail brands, craft stores, and independent artisans requiring ultra-fast page load times and conversion-focused design.",
+      "ja": "地域の小売ブランド、工芸店、独立系の職人に向けてカスタマイズした WordPress・WooCommerce テーマ。超高速なページ読み込みと、コンバージョンを重視した設計を実現します。"
+    },
+    "stats": "WooCommerce • Tailwind CSS",
+    "tags": [
+      "PHP",
+      "Wordpress",
+      "Tailwind CSS",
+      "WooCommerce"
+    ],
+    "githubUrl": "https://github.com/krahman80/visitor-request-form",
+    "previewUrl": "https://wp-one.mikanalabs.com",
+    "images": [
+      {
+        "src": "/assets/works/koya/1.png",
+        "alt": "Koya Mart blog index page listing plant-based food and health articles"
+      },
+      {
+        "src": "/assets/works/koya/2.png",
+        "alt": "Koya Mart homepage with the spotlight product banner and latest articles"
+      }
+    ]
+  }
+]

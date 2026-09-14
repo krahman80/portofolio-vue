@@ -19,6 +19,14 @@
     "copy_email_title": "Copy email to clipboard",
     "copied": "Copied"
   },
+  "work": {
+    "eyebrow": "Selected Portfolio",
+    "title": "Featured Works & Systems",
+    "subtitle": "A curated selection of web applications, client projects, and data tools built with clean TypeScript and modern frameworks.",
+    "preview": "Preview",
+    "preview_coming_soon": "Preview coming soon",
+    "github": "Github repo"
+  },
   "footer": {
     "connect": "Connect",
     "email_label": "Email:",
