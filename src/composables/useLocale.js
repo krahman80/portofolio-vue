@@ -52,12 +52,18 @@ export function useLocale() {
         }
     }
 
-    /** UI chrome string, addressed by dot path, falling back to English. */
-    function t(path) {
-        return (
+    /**
+     * UI chrome string, addressed by dot path, falling back to English.
+     * Optional `params` fill `{name}` placeholders, e.g. t('work.go_to_image', { n: 2 }).
+     */
+    function t(path, params) {
+        const raw =
             lookup(path, MESSAGES[locale.value]) ??
             lookup(path, MESSAGES[DEFAULT_LOCALE]) ??
             path
+        if (!params || typeof raw !== 'string') return raw
+        return raw.replace(/\{(\w+)\}/g, (match, key) =>
+            key in params ? String(params[key]) : match,
         )
     }
 

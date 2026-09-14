@@ -10,6 +10,8 @@ const props = defineProps({
     total: { type: Number, required: true },
 })
 
+const emit = defineEmits(['open'])
+
 const { t, tl } = useLocale()
 
 /** FR-15 — the cover is the first entry in the project's `images[]`. */
@@ -19,8 +21,12 @@ const pad = (n) => String(n).padStart(2, '0')
 </script>
 
 <template>
-    <article :id="`project-card-${project.id}`"
-        class="group flex flex-col bg-transparent rounded-[14px] p-0 transition-all duration-300">
+    <!-- FR-16 — clicking anywhere on the card (thumbnail, title or Preview) opens the modal.
+         `tabindex="-1"` makes the card programmatically focusable so focus can be returned
+         to it on close (FR-22) without adding it to the tab order; the Preview button below
+         is the keyboard-accessible way in. -->
+    <article :id="`project-card-${project.id}`" tabindex="-1" @click="emit('open')"
+        class="group flex flex-col bg-transparent rounded-[14px] p-0 transition-all duration-300 cursor-pointer">
         <!--
             FR-15 — the cover is `images[0]`. A project with no screenshots yet falls back to
             a dark banner built from its own data (category, stats, index), so adding images
@@ -29,7 +35,7 @@ const pad = (n) => String(n).padStart(2, '0')
         <div
             class="relative w-full h-48 bg-[#181A19] clipped-corner-card overflow-hidden shadow-sm group-hover:shadow-md transition-shadow">
             <img v-if="cover" :src="cover.src" :alt="cover.alt" loading="lazy"
-                class="absolute inset-0 w-full h-full object-cover object-center" />
+                class="absolute inset-0 w-full h-full object-cover object-top" />
             <div v-else
                 class="absolute inset-0 bg-linear-to-br from-[#1F2221] to-primary p-4 flex flex-col justify-between text-zinc-300 select-none">
                 <span class="text-[10px] font-mono tracking-wider text-zinc-400">
@@ -62,13 +68,12 @@ const pad = (n) => String(n).padStart(2, '0')
 
             <div class="pt-3 border-t border-hairline flex items-center justify-between gap-3 mt-auto">
                 <!--
-                    Sprint 3 is browse-only: the card has no detail view yet, so Preview is
-                    explicitly disabled rather than silently doing nothing. Sprint 4 (FR-16)
-                    wires it to the project modal.
+                    FR-16 — the card's keyboard-accessible entry point. `.stop` keeps the
+                    click from also bubbling to the card's own handler.
                 -->
-                <button type="button" disabled
-                    class="inline-flex items-center gap-1.5 bg-primary text-white text-xs font-semibold px-4 py-2 rounded-lg shadow-xs opacity-50 cursor-not-allowed"
-                    :title="t('work.preview_coming_soon')">
+                <button type="button"
+                    class="inline-flex items-center gap-1.5 bg-primary text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-primary-hover transition-all cursor-pointer shadow-xs active:scale-95"
+                    @click.stop="emit('open')">
                     <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path
@@ -79,7 +84,8 @@ const pad = (n) => String(n).padStart(2, '0')
                     {{ t('work.preview') }}
                 </button>
 
-                <a :href="project.githubUrl" target="_blank" rel="noopener noreferrer"
+                <!-- .stop so following the repo link doesn't also open the modal. -->
+                <a :href="project.githubUrl" target="_blank" rel="noopener noreferrer" @click.stop
                     class="inline-flex items-center gap-1 text-xs font-medium text-secondary hover:text-primary transition-colors py-1 cursor-pointer">
                     <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

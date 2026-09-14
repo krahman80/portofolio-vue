@@ -22,10 +22,18 @@
   "work": {
     "eyebrow": "厳選プロジェクト",
     "title": "開発実績・プロダクト",
-    "subtitle": "TypeScript、モダンフレームワーク、スケーラブルな設計で構築した代表的なWebアプリケーション一覧です。",
+    "subtitle": "Laravel アプリケーション、カスタム WordPress テーマ、クライアント向けプラットフォームを、PHP・Vue・Tailwind CSS で構築した厳選ポートフォリオです。",
     "preview": "プレビュー",
-    "preview_coming_soon": "プレビューは近日公開",
-    "github": "GitHub リポジトリ"
+    "github": "GitHub リポジトリ",
+    "architecture": "アーキテクチャ概要",
+    "tech_stack": "採用技術スタック",
+    "project_id": "プロジェクトID",
+    "github_repository": "GitHub リポジトリ",
+    "launch_live_app": "ライブアプリを開く",
+    "close_dialog": "ダイアログを閉じる",
+    "previous_image": "前の画像",
+    "next_image": "次の画像",
+    "go_to_image": "{n} 枚目の画像を表示"
   },
   "footer": {
     "connect": "連絡先・リンク",

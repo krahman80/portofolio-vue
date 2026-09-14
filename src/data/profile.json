@@ -2,35 +2,35 @@
   "name": "Kautsar Rahman",
   "role": {
     "en": "Independent Web Developer & Engineer",
-    "ja": "ウェブエンジニア / フロントエンド・フルスタック"
+    "ja": "独立系ウェブ開発者・エンジニア"
   },
   "status": {
-    "en": "Available for contracts",
-    "ja": "新規案件対応可能"
+    "en": "Available for work",
+    "ja": "お仕事募集中"
   },
   "location": {
     "city": "Sapporo, Hokkaido",
     "coords": "43.06377, 141.34233"
   },
   "bio": {
-    "en": "I design and build high-performance web applications combining architectural precision, typography clarity, and rock-solid engineering. Grounded in the calm northern atmosphere of Hokkaido, I partner with companies worldwide on modern TypeScript, React, and full-stack software.",
-    "ja": "北国・北海道の落ち着いた環境を拠点に、妥協のないアーキテクチャ設計と美しいタイポグラフィ、堅牢なエンジニアリングを融合させたWebアプリケーションを開発しています。TypeScript、React、フルスタック技術で国内外のプロジェクトを支援します。"
+    "en": "I design and build robust web applications and custom digital platforms, blending clean database architecture with seamless full-stack execution. Rooted in Sapporo, Hokkaido, I partner with companies worldwide using Laravel, PHP, WordPress, and Vue.js.",
+    "ja": "堅牢なWebアプリケーションとカスタムデジタルプラットフォームを設計・開発しています。クリーンなデータベース設計とシームレスなフルスタック実装を組み合わせ、北海道・札幌を拠点に Laravel、PHP、WordPress、Vue.js を用いて世界各国の企業と協働しています。"
   },
   "bioShort": {
-    "en": "Web developer crafting thoughtful digital products with architectural restraint and modern TypeScript standards from Sapporo, Japan.",
-    "ja": "北海道・札幌を拠点に、モダンなTypeScript技術と無駄のない設計思想でWeb体験を構築するエンジニア。"
+    "en": "Web developer crafting robust digital platforms with clean backend architecture and tailored Laravel standards from Sapporo, Japan.",
+    "ja": "北海道・札幌を拠点に、クリーンなバックエンド設計と Laravel を軸に、堅牢なデジタルプラットフォームを構築するWebエンジニア。"
   },
   "skills": [
-    "Lavarel & PHP",
+    "Laravel & PHP",
     "WordPress & CMS",
     "Tailwind CSS v4",
     "Vue 3",
-    "Asp.net Core"
+    "ASP.NET Core"
   ],
   "email": "kautsar.rahman@gmail.com",
   "social": {
-    "github": "https://github.com",
-    "linkedin": "https://www.linkedin.com"
+    "github": "https://github.com/krahman80",
+    "linkedin": "https://www.linkedin.com/in/kautsar-rahman-31b13742/"
   },
   "avatars": [
     {

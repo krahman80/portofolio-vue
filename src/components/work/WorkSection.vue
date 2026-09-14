@@ -1,7 +1,8 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import ProjectCard from '@/components/work/ProjectCard.vue'
+import ProjectModal from '@/components/work/ProjectModal.vue'
 import { useLocale } from '@/composables/useLocale'
 import works from '@/data/works.json'
 
@@ -11,6 +12,9 @@ const { t } = useLocale()
 const projects = computed(() =>
     [...works].sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)),
 )
+
+/** FR-16 — the open project, or null. Only one modal can be open at a time. */
+const activeProject = ref(null)
 </script>
 
 <template>
@@ -32,7 +36,11 @@ const projects = computed(() =>
         <!-- Cards grid — 1 col mobile / 2 tablet / 3 desktop (NFR-3) -->
         <div id="work-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
             <ProjectCard v-for="(project, i) in projects" :key="project.id" :project="project" :index="i + 1"
-                :total="projects.length" />
+                :total="projects.length" @open="activeProject = project" />
         </div>
+
+        <!-- FR-16/FR-22 — detail view. Mounting it conditionally is what triggers the
+             focus trap and the focus-return-to-card behaviour on close. -->
+        <ProjectModal v-if="activeProject" :project="activeProject" @close="activeProject = null" />
     </section>
 </template>

@@ -40,21 +40,21 @@
     "category": "WP Themes",
     "sortOrder": 2,
     "title": {
-      "en": "Pramana staffing Agency",
+      "en": "Pramana Staffing Agency",
       "ja": "プラマナ 人材紹介エージェンシー"
     },
     "description": {
       "en": "Pramana Staffing Agency, Connecting leaders with top-tier talent in SouthEast Asia.",
       "ja": "東南アジアを拠点に、企業のリーダーと第一級の人材を結びつけるプラマナ人材紹介エージェンシー。"
     },
-    "stats": "Wordpress • classic themes",
+    "stats": "WordPress • classic themes",
     "tags": [
       "PHP",
-      "Wordpress",
+      "WordPress",
       "Classic Themes",
-      "Css"
+      "CSS"
     ],
-    "githubUrl": "https://github.com/krahman80/visitor-request-form",
+    "githubUrl": "https://github.com/krahman80/",
     "previewUrl": "https://wp-one.mikalabs.com",
     "images": [
       {
@@ -64,6 +64,10 @@
       {
         "src": "/assets/works/pramana/2.png",
         "alt": "Pramana Staffing Agency author archive listing published articles"
+      },
+      {
+        "src": "/assets/works/pramana/3.png",
+        "alt": "Pramana Staffing Agency homepage showing the recruitment hero, team imagery and staffing article highlights"
       }
     ]
   },
@@ -82,7 +86,7 @@
     "stats": "WooCommerce • Tailwind CSS",
     "tags": [
       "PHP",
-      "Wordpress",
+      "WordPress",
       "Tailwind CSS",
       "WooCommerce"
     ],
@@ -96,6 +100,10 @@
       {
         "src": "/assets/works/koya/2.png",
         "alt": "Koya Mart homepage with the spotlight product banner and latest articles"
+      },
+      {
+        "src": "/assets/works/koya/3.png",
+        "alt": "Koya Mart homepage showing the Spotlight Product banner, blog search filters, categories and farm pantry product cards"
       }
     ]
   }
