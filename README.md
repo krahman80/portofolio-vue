@@ -4,7 +4,7 @@ A bilingual (EN / JA) developer portfolio built as a fully static Vue 3 single-p
 no backend, database, or server process — the production build is plain HTML, CSS, JS and image
 files that can be uploaded to any static host.
 
-<img src="screenshot.png" alt="Portfolio homepage showing the hero section, profile photo switcher and project grid" width="720">
+<img src="screenshot.jpg" alt="Portfolio homepage showing the hero section, profile photo switcher and project grid" width="720">
 
 ---
 
